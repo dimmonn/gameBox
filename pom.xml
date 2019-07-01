@@ -41,6 +41,11 @@
             <artifactId>jcabi-log</artifactId>
             <version>0.17.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.onehippo.cms7</groupId>
+            <artifactId>hippo-cms-testutils</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

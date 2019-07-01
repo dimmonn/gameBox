@@ -10,12 +10,12 @@ import static com.local.boxes.model.SIGNS.*;
 @Log4j
 public class RewardFinder implements BoxGameRunnable {
     private int result;
+    private boolean firstRoundState = true;
 
     @Override
     public void playGame(Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
         log.info("SHOW TIME...");
         int secondRoundSize = secondChanceShuffled.size();
-        Collections.shuffle(shuffled);
         List<Box> boxes = new ArrayList<>(shuffled);
         Box extraLifeBox = new Box().createBox(0, EXTRA_LIFE);
         Box gameOverBox = new Box().createBox(0, GAME_OVER);
@@ -29,10 +29,11 @@ public class RewardFinder implements BoxGameRunnable {
             result += sum;
             log.warn("round result is " + sum);
         }
-        if (secondChanceShuffled.size() < secondRoundSize) {
+        if (!firstRoundState) {
             return;
         }
         Box pop = secondChanceShuffled.pop();
+        firstRoundState = false;
         if (pop.getSign() == EXTRA_LIFE) {
             playGame(shuffled, secondChanceShuffled);
         } else {

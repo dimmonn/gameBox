@@ -13,12 +13,12 @@ import static com.local.boxes.model.SIGNS.GO_GO_GO;
 public class GameFactory {
     private final Game.GameBuilder gameBuilder = new Game.GameBuilder();
 
-    public Game getGameInstance(Map<Integer, Integer> bonuses, List<SIGNS> signs, Map<Integer, Integer> secondChanceAward, List<SIGNS> secondChanceSigns) {
+    public Game getGameInstance(Map<Integer, Integer> bonuses, List<SIGNS> signs, Map<Integer, Integer> secondChanceAward, List<SIGNS> secondChanceSigns, boolean shaffleOnStart) {
         fillInAwards(bonuses, true);
         fillInSigns(signs, true);
         fillInAwards(secondChanceAward, false);
         fillInSigns(secondChanceSigns, false);
-        return gameBuilder.build();
+        return gameBuilder.build(shaffleOnStart);
     }
 
     private void fillInSigns(List<SIGNS> signs, boolean isFfirstChance) {
@@ -36,8 +36,7 @@ public class GameFactory {
             for (int i = 0; i < bonuses.get(bonus); i++) {
                 if (isFfirstChance) {
                     gameBuilder.addBox(new Box().createBox(bonus, GO_GO_GO));
-                }
-                else {
+                } else {
                     gameBuilder.addSecondChance(new Box().createBox(bonus, GO_GO_GO));
                 }
             }

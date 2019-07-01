@@ -1,4 +1,5 @@
 package com.local.boxes;
+
 import com.local.boxes.factory.GameFactory;
 import com.local.boxes.model.SIGNS;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +33,7 @@ public class SimulateTheGame {
         List<SIGNS> secondChanceNewLife = new ArrayList<SIGNS>() {{
             add(SIGNS.EXTRA_LIFE);
         }};
-        return new GameFactory().getGameInstance(bonuses, signs,secondChanceAward,secondChanceNewLife);
+        return new GameFactory().getGameInstance(bonuses, signs, secondChanceAward, secondChanceNewLife, true);
     }
 
 

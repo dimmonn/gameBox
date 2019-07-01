@@ -22,6 +22,18 @@ public class Game {
     private int result = 0;
     private boolean isFinished = true;
 
+    public Stack<Box> getShuffled() {
+        Stack<Box> shuffledCopy =  new Stack<>();
+        shuffledCopy.addAll(shuffled);
+        return shuffledCopy;
+    }
+
+    public Stack<Box> getSecondChanceShuffled() {
+        Stack<Box> secondChanceShuffledCopy =  new Stack<>();
+        secondChanceShuffledCopy.addAll(secondChanceShuffled);
+        return secondChanceShuffledCopy;
+    }
+
     private int getSecondChanceSize() {
         return secondChance.size();
     }
@@ -91,7 +103,7 @@ public class Game {
             shuffled = new Stack<>();
             shuffled.addAll(boxes);
             if (!disableShuffleOnSecondTry) {
-                Collections.shuffle(shuffled);
+               // Collections.shuffle(shuffled);
             }
             playRound(disableShuffleOnSecondTry);
         } else {
@@ -124,11 +136,13 @@ public class Game {
             secondChance.add(_box);
         }
 
-        public Game build() {
+        public Game build(boolean shaffleOnStart) {
             shuffled.addAll(boxes);
             secondChanceShuffled.addAll(secondChance);
-            Collections.shuffle(shuffled);
-            Collections.shuffle(secondChanceShuffled);
+            if (shaffleOnStart) {
+                Collections.shuffle(shuffled);
+                Collections.shuffle(secondChanceShuffled);
+            }
             return new Game(this);
         }
     }
