@@ -12,8 +12,7 @@ git clone https://github.com/dimmonn/gameBox.git
 
 before to start make sure the the checkbox below in idea is ticked
 
-![alt text](http://prntscr.com/o9eg4v)
-
+![Alt text](src/main/resources/idea_setup.png?raw=true "Idea Setup")
 
 ## Running the tests
 

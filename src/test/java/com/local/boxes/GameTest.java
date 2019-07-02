@@ -29,8 +29,6 @@ class GameTest {
     private List<SIGNS> secondChanceNewLife;
     private Set<Integer> expectedAnswers;
     @Mock
-    private List<Box> boxes;
-    @Mock
     private Stack<Box> shuffled;
     @Mock
     private Stack<Box> secondChanceShuffled;
