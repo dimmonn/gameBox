@@ -82,36 +82,42 @@ class GameTest {
 
     @Test
     void playRoundUseCasesTest() throws NoSuchFieldException {
+
         FieldSetter.setField(game, game.getClass().getDeclaredField("shuffled"), shuffled);
         secondChanceShuffled = reverse(secondChanceShuffled);
         FieldSetter.setField(game, game.getClass().getDeclaredField("secondChanceShuffled"), secondChanceShuffled);
         game.playRound(true);
+
         assertEquals(20, game.getResult());
+
         game.resetAndShuffle();
+
         secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
         FieldSetter.setField(game, game.getClass().getDeclaredField("secondChanceShuffled"), secondChanceShuffled);
         shuffled = fillInMockedShuffledDeck(bonuses, signs);
         FieldSetter.setField(game, game.getClass().getDeclaredField("shuffled"), shuffled);
         game.playRound(true);
+
         assertEquals(0, game.getResult());
+
         game.resetAndShuffle();
-        secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
-        FieldSetter.setField(game, game.getClass().getDeclaredField("secondChanceShuffled"), secondChanceShuffled);
-        shuffled = fillInMockedShuffledDeck(bonuses, signs);
-        FieldSetter.setField(game, game.getClass().getDeclaredField("shuffled"), shuffled);
-        game.playRound(true);
+
     }
 
 
     @Test
     void TenMSimulationWithAlgorythm() throws NoSuchFieldException {
         for (int i = 0; i < 10000000; i++) {
-            BoxGameContext boxGameContext1 = new BoxGameContext(new RewardFinder(), game.getShuffled(), game.getSecondChanceShuffled());
+            BoxGameContext boxGameContext = new BoxGameContext(new RewardFinder(), game.getShuffled(), game.getSecondChanceShuffled());
             FieldSetter.setField(game, game.getClass().getDeclaredField("boxes"), game.getShuffled());
             game.playRound(false);
+
             assertTrue(expectedAnswers.contains(game.getResult()));
-            boxGameContext1.superBoxGameRun();
-            assertEquals(boxGameContext1.getResult(), game.getResult());
+
+            boxGameContext.superBoxGameRun();
+
+            assertEquals(boxGameContext.getResult(), game.getResult());
+
             game.resetAndShuffle();
         }
     }
