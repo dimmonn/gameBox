@@ -42,7 +42,7 @@ public class Game {
         return shuffled.size();
     }
 
-    private Box getBoxFromShaffledDeck(boolean isFirstChance) {
+    private Box getBoxFromShuffledDeck(boolean isFirstChance) {
         if (isFirstChance) {
             log.info("got the box " + shuffled.peek());
             return new Box(shuffled.pop());
@@ -61,7 +61,7 @@ public class Game {
         log.warn("starting the game, second shuffle is disabled: " + disableShuffleOnTheSecondTry);
         int gameOver = 0;
         for (int i = 0; i < getAvailableBoxes(); i++) {
-            Box boxFromShaffledDeck = getBoxFromShaffledDeck(true);
+            Box boxFromShuffledDeck = getBoxFromShuffledDeck(true);
             i--;
             if (gameOver == 3) {
                 secondChanceRun(disableShuffleOnTheSecondTry);
@@ -69,9 +69,9 @@ public class Game {
                 log.warn("three subsequent game-over sign ends first round");
                 log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
                 return;
-            } else if (boxFromShaffledDeck.getSign() == GO_GO_GO) {
-                result += boxFromShaffledDeck.getReward();
-            } else if (boxFromShaffledDeck.getSign() == GAME_OVER) {
+            } else if (boxFromShuffledDeck.getSign() == GO_GO_GO) {
+                result += boxFromShuffledDeck.getReward();
+            } else if (boxFromShuffledDeck.getSign() == GAME_OVER) {
                 gameOver++;
             } else {
                 gameOver--;
@@ -98,8 +98,8 @@ public class Game {
         if (secondChanceShuffled.size() < getSecondChanceSize()) {
             return;
         }
-        Box boxFromShaffledDeckSecondRun = getBoxFromShaffledDeck(false);
-        if (boxFromShaffledDeckSecondRun.getSign() == SIGNS.EXTRA_LIFE) {
+        Box boxFromShuffledDeckSecondRun = getBoxFromShuffledDeck(false);
+        if (boxFromShuffledDeckSecondRun.getSign() == SIGNS.EXTRA_LIFE) {
             shuffled = new Stack<>();
             shuffled.addAll(boxes);
             if (!disableShuffleOnSecondTry) {
@@ -107,7 +107,7 @@ public class Game {
             }
             playRound(disableShuffleOnSecondTry);
         } else {
-            result += boxFromShaffledDeckSecondRun.getReward();
+            result += boxFromShuffledDeckSecondRun.getReward();
         }
         log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
     }
@@ -136,10 +136,10 @@ public class Game {
             secondChance.add(_box);
         }
 
-        public Game build(boolean shaffleOnStart) {
+        public Game build(boolean shuffleOnStart) {
             shuffled.addAll(boxes);
             secondChanceShuffled.addAll(secondChance);
-            if (shaffleOnStart) {
+            if (shuffleOnStart) {
                 Collections.shuffle(shuffled);
                 Collections.shuffle(secondChanceShuffled);
             }

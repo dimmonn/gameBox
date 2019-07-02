@@ -98,7 +98,7 @@ class GameTest {
 
 
     @Test
-    void TenMSimulationWithAlgorythm() throws NoSuchFieldException {
+    void TenMSimulationWithAlgorithm() throws NoSuchFieldException {
         for (int i = 0; i < 10000000; i++) {
             BoxGameContext boxGameContext = new BoxGameContext(new RewardFinder(), game.getShuffled(), game.getSecondChanceShuffled());
             FieldSetter.setField(game, game.getClass().getDeclaredField("boxes"), game.getShuffled());
@@ -116,7 +116,7 @@ class GameTest {
 
 
     @Test
-    void algorythmScenarioTest() {
+    void algorithmScenarioTest() {
         BoxGameContext boxGameContext1 = new BoxGameContext(new RewardFinder(), shuffled, secondChanceShuffled);
         boxGameContext1.superBoxGameRun();
         assertEquals(0, boxGameContext1.getResult());

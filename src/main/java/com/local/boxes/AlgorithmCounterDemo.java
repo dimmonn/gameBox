@@ -3,7 +3,7 @@ package com.local.boxes;
 import com.local.boxes.algorythm.BoxGameContext;
 import com.local.boxes.algorythm.RewardFinder;
 
-public class AlgorythmCounterDemo {
+public class AlgorithmCounterDemo {
 
     public static void main(String[] args) {
         Utils demoBuildHelper = new Utils();
