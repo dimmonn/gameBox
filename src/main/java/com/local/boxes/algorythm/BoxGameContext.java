@@ -5,9 +5,9 @@ import com.local.boxes.model.Box;
 import java.util.Stack;
 
 public class BoxGameContext {
-    private BoxGameRunnable boxGameRunnable;
-    private Stack<Box> shuffled;
-    private Stack<Box> secondChanceShuffled;
+    private final BoxGameRunnable boxGameRunnable;
+    private final Stack<Box> shuffled;
+    private final Stack<Box> secondChanceShuffled;
 
     public BoxGameContext(BoxGameRunnable boxGameRunnable, Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
         this.boxGameRunnable = boxGameRunnable;

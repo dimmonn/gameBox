@@ -23,13 +23,13 @@ public class Game {
     private boolean isFinished = true;
 
     public Stack<Box> getShuffled() {
-        Stack<Box> shuffledCopy =  new Stack<>();
+        Stack<Box> shuffledCopy = new Stack<>();
         shuffledCopy.addAll(shuffled);
         return shuffledCopy;
     }
 
     public Stack<Box> getSecondChanceShuffled() {
-        Stack<Box> secondChanceShuffledCopy =  new Stack<>();
+        Stack<Box> secondChanceShuffledCopy = new Stack<>();
         secondChanceShuffledCopy.addAll(secondChanceShuffled);
         return secondChanceShuffledCopy;
     }
@@ -44,10 +44,10 @@ public class Game {
 
     private Box getBoxFromShaffledDeck(boolean isFirstChance) {
         if (isFirstChance) {
-            log.info("got the box "+shuffled.peek());
+            log.info("got the box " + shuffled.peek());
             return new Box(shuffled.pop());
         } else {
-            log.info("second chance box  "+secondChanceShuffled.peek());
+            log.info("second chance box  " + secondChanceShuffled.peek());
             return new Box(secondChanceShuffled.pop());
         }
     }
@@ -67,7 +67,7 @@ public class Game {
                 secondChanceRun(disableShuffleOnTheSecondTry);
                 isFinished = true;
                 log.warn("three subsequent game-over sign ends first round");
-                log.warn("FINISHED THE GAME WITH RESULT OF: "+result);
+                log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
                 return;
             } else if (boxFromShaffledDeck.getSign() == GO_GO_GO) {
                 result += boxFromShaffledDeck.getReward();
@@ -103,13 +103,13 @@ public class Game {
             shuffled = new Stack<>();
             shuffled.addAll(boxes);
             if (!disableShuffleOnSecondTry) {
-               // Collections.shuffle(shuffled);
+                Collections.shuffle(shuffled);
             }
             playRound(disableShuffleOnSecondTry);
         } else {
             result += boxFromShaffledDeckSecondRun.getReward();
         }
-        log.warn("FINISHED THE GAME WITH RESULT OF: "+result);
+        log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
     }
 
     private Game(GameBuilder gameBuilder) {

@@ -38,29 +38,21 @@ class GameTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        bonuses = new HashMap<Integer, Integer>() {{
-            put(100, 1);
-            put(20, 2);
-            put(5, 5);
-        }};
-        signs = new ArrayList<SIGNS>() {{
-            add(SIGNS.EXTRA_LIFE);
-            add(SIGNS.GAME_OVER);
-            add(SIGNS.GAME_OVER);
-            add(SIGNS.GAME_OVER);
-        }};
+        Utils demoBuildHelper = new Utils();
+        demoBuildHelper.basicSetup();
+        bonuses = demoBuildHelper.getBonuses();
+        signs = demoBuildHelper.getSigns();
+        secondChanceAward = demoBuildHelper.getSecondChanceAward();
+        secondChanceNewLife = demoBuildHelper.getSecondChanceNewLife();
 
-        secondChanceAward = new HashMap<Integer, Integer>() {{
-            put(5, 1);
-            put(10, 1);
-            put(20, 1);
-        }};
-        secondChanceNewLife = new ArrayList<SIGNS>() {{
-            add(SIGNS.EXTRA_LIFE);
-        }};
         shuffled = fillInMockedShuffledDeck(bonuses, signs);
         secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
-        game = new GameFactory().getGameInstance(bonuses, signs, secondChanceAward, secondChanceNewLife, false);
+
+        game = new GameFactory().getGameInstance(
+                bonuses, signs, secondChanceAward,
+                secondChanceNewLife, false
+        );
+
         expectedAnswers = Files.readAllLines(Paths.get("src/test/resources/expected_result.txt")).
                 stream().map(e -> e.split(",")).
                 flatMapToInt(e -> Arrays.stream(Stream.of(e).mapToInt(Integer::parseInt).toArray()))
@@ -88,7 +80,7 @@ class GameTest {
         FieldSetter.setField(game, game.getClass().getDeclaredField("secondChanceShuffled"), secondChanceShuffled);
         game.playRound(true);
 
-        assertEquals(20, game.getResult());
+        assertEquals(10, game.getResult());
 
         game.resetAndShuffle();
 
@@ -110,7 +102,7 @@ class GameTest {
         for (int i = 0; i < 10000000; i++) {
             BoxGameContext boxGameContext = new BoxGameContext(new RewardFinder(), game.getShuffled(), game.getSecondChanceShuffled());
             FieldSetter.setField(game, game.getClass().getDeclaredField("boxes"), game.getShuffled());
-            game.playRound(false);
+            game.playRound(true);
 
             assertTrue(expectedAnswers.contains(game.getResult()));
 
@@ -133,7 +125,7 @@ class GameTest {
         Collections.reverse(secondChanceShuffled);
         BoxGameContext boxGameContext2 = new BoxGameContext(new RewardFinder(), shuffled, secondChanceShuffled);
         boxGameContext2.superBoxGameRun();
-        assertEquals(185, boxGameContext2.getResult());
+        assertEquals(175, boxGameContext2.getResult());
 
     }
 
