@@ -23,6 +23,7 @@ com.local.boxes.GameTest.tenMSimulationWithAlgorithm
 ```
 it compares return value calculated by algorithm to the one game simulation produces
 it runs 10M times
+
 ### DEMO
 
 Algorithm demo
@@ -36,3 +37,7 @@ Game Simulation Demo
 ```
 com.local.boxes.GameSimulationDemo
 ```
+
+### Upcoming Tasks
+
+* **De-couple the shuffle algorithm from the game object**, shuffle has to be injected and shall follow some strategy design pattern, so we can use any shuffle algorithm we needed
