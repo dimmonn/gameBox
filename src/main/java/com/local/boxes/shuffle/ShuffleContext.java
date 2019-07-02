@@ -5,8 +5,8 @@ import com.local.boxes.model.Box;
 
 import java.util.List;
 
-public class ShuffleContext {
-    private Shuffleable collectionShuffleable;
+class ShuffleContext {
+    private final Shuffleable collectionShuffleable;
 
     public ShuffleContext(Shuffleable collectionShuffleable) {
         this.collectionShuffleable = collectionShuffleable;
