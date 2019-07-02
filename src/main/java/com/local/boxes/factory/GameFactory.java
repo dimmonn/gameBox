@@ -13,7 +13,11 @@ import static com.local.boxes.model.SIGNS.GO_GO_GO;
 public class GameFactory {
     private final Game.GameBuilder gameBuilder = new Game.GameBuilder();
 
-    public Game getGameInstance(Map<Integer, Integer> bonuses, List<SIGNS> signs, Map<Integer, Integer> secondChanceAward, List<SIGNS> secondChanceSigns, boolean shuffleOnStart) {
+    public Game getGameInstance(
+            Map<Integer, Integer> bonuses, List<SIGNS> signs,
+            Map<Integer, Integer> secondChanceAward, List<SIGNS> secondChanceSigns,
+            boolean shuffleOnStart
+    ) {
         fillInAwards(bonuses, true);
         fillInSigns(signs, true);
         fillInAwards(secondChanceAward, false);
