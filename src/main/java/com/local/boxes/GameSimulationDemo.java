@@ -12,7 +12,6 @@ public class GameSimulationDemo {
                 demoBuildHelper.getSecondChanceNewLife(), new BasicShuffle(), true
         );
         game.playRound(false);
-        System.out.println(game);
     }
 
 
