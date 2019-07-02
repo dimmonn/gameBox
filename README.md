@@ -21,5 +21,18 @@ the most important test is in here
 ```
 com.local.boxes.GameTest.tenMSimulationWithAlgorithm
 ```
-it compares return value produced by algorithm and game simulation
+it compares return value produced by algorithm and game simulation 10M times
 
+### DEMO
+
+Algorithm demo
+
+```
+com.local.boxes.AlgorithmCounterDemo
+```
+
+Game Simulation Demo
+
+```
+com.local.boxes.GameSimulationDemo
+```
