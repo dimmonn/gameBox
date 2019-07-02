@@ -1,6 +1,7 @@
 package com.local.boxes;
 
 import com.local.boxes.factory.GameFactory;
+import com.local.boxes.shuffle.BasicShuffle;
 
 public class GameSimulationDemo {
     public static void main(String[] args) {
@@ -8,9 +9,10 @@ public class GameSimulationDemo {
         demoBuildHelper.basicSetup();
         Game game = new GameFactory().getGameInstance(
                 demoBuildHelper.getBonuses(), demoBuildHelper.getSigns(), demoBuildHelper.getSecondChanceAward(),
-                demoBuildHelper.getSecondChanceNewLife(), true
+                demoBuildHelper.getSecondChanceNewLife(), new BasicShuffle(), true
         );
         game.playRound(false);
+        System.out.println(game);
     }
 
 

@@ -2,6 +2,7 @@ package com.local.boxes;
 
 import com.local.boxes.model.Box;
 import com.local.boxes.model.SIGNS;
+import com.local.boxes.shuffle.Shuffleable;
 import lombok.extern.log4j.Log4j;
 
 
@@ -63,16 +64,18 @@ public class Game {
         for (int i = 0; i < getAvailableBoxes(); i++) {
             Box boxFromShuffledDeck = getBoxFromShuffledDeck(true);
             i--;
-            if (gameOver == 3) {
-                secondChanceRun(disableShuffleOnTheSecondTry);
-                isFinished = true;
-                log.warn("three subsequent game-over sign ends first round");
-                log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
-                return;
-            } else if (boxFromShuffledDeck.getSign() == GO_GO_GO) {
+             if (boxFromShuffledDeck.getSign() == GO_GO_GO) {
                 result += boxFromShuffledDeck.getReward();
             } else if (boxFromShuffledDeck.getSign() == GAME_OVER) {
                 gameOver++;
+                if (gameOver == 3) {
+                    log.warn("three subsequent game-over sign ends first round");
+                    secondChanceRun(disableShuffleOnTheSecondTry);
+                    isFinished = true;
+                    log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
+                    return;
+                }
+
             } else {
                 gameOver--;
             }
@@ -81,14 +84,14 @@ public class Game {
         isFinished = true;
     }
 
-    public void resetAndShuffle() {
+    public void resetAndShuffle(Shuffleable shuffleable) {
         if (isFinished) {
             shuffled = new Stack<>();
             shuffled.addAll(boxes);
-            Collections.shuffle(shuffled);
+            shuffleable.shuffle(shuffled);
             secondChanceShuffled = new Stack<>();
             secondChanceShuffled.addAll(secondChance);
-            Collections.shuffle(secondChanceShuffled);
+            shuffleable.shuffle(secondChanceShuffled);
             log.warn("resetting the game and shuffling the deck");
             result = 0;
         }
@@ -136,12 +139,12 @@ public class Game {
             secondChance.add(_box);
         }
 
-        public Game build(boolean shuffleOnStart) {
+        public Game build(boolean shuffleOnStart, Shuffleable shuffleable) {
             shuffled.addAll(boxes);
             secondChanceShuffled.addAll(secondChance);
             if (shuffleOnStart) {
-                Collections.shuffle(shuffled);
-                Collections.shuffle(secondChanceShuffled);
+                shuffleable.shuffle(shuffled);
+                shuffleable.shuffle(secondChanceShuffled);
             }
             return new Game(this);
         }
@@ -151,6 +154,11 @@ public class Game {
     public String toString() {
         return "Game{" +
                 "boxes=" + boxes +
+                ", shuffled=" + shuffled +
+                ", secondChance=" + secondChance +
+                ", secondChanceShuffled=" + secondChanceShuffled +
+                ", result=" + result +
+                ", isFinished=" + isFinished +
                 '}';
     }
 }

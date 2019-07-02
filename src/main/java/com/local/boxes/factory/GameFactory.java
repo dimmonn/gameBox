@@ -3,6 +3,7 @@ package com.local.boxes.factory;
 import com.local.boxes.Game;
 import com.local.boxes.model.SIGNS;
 import com.local.boxes.model.Box;
+import com.local.boxes.shuffle.Shuffleable;
 
 import java.util.List;
 import java.util.Map;
@@ -16,13 +17,14 @@ public class GameFactory {
     public Game getGameInstance(
             Map<Integer, Integer> bonuses, List<SIGNS> signs,
             Map<Integer, Integer> secondChanceAward, List<SIGNS> secondChanceSigns,
+            Shuffleable shuffleable,
             boolean shuffleOnStart
     ) {
         fillInAwards(bonuses, true);
         fillInSigns(signs, true);
         fillInAwards(secondChanceAward, false);
         fillInSigns(secondChanceSigns, false);
-        return gameBuilder.build(shuffleOnStart);
+        return gameBuilder.build(shuffleOnStart,shuffleable);
     }
 
     private void fillInSigns(List<SIGNS> signs, boolean isFirstChance) {

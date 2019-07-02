@@ -5,6 +5,7 @@ import com.local.boxes.algorythm.RewardFinder;
 import com.local.boxes.factory.GameFactory;
 import com.local.boxes.model.Box;
 import com.local.boxes.model.SIGNS;
+import com.local.boxes.shuffle.BasicShuffle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -48,7 +49,7 @@ class GameTest {
 
         game = new GameFactory().getGameInstance(
                 bonuses, signs, secondChanceAward,
-                secondChanceNewLife, false
+                secondChanceNewLife, new BasicShuffle(), false
         );
 
         expectedAnswers = Files.readAllLines(Paths.get("src/test/resources/expected_result.txt")).
@@ -80,7 +81,7 @@ class GameTest {
 
         assertEquals(10, game.getResult());
 
-        game.resetAndShuffle();
+        game.resetAndShuffle(new BasicShuffle());
 
         secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
         FieldSetter.setField(game, game.getClass().getDeclaredField("secondChanceShuffled"), secondChanceShuffled);
@@ -90,7 +91,7 @@ class GameTest {
 
         assertEquals(0, game.getResult());
 
-        game.resetAndShuffle();
+        game.resetAndShuffle(new BasicShuffle());
 
     }
 
@@ -108,7 +109,7 @@ class GameTest {
 
             assertEquals(boxGameContext.getResult(), game.getResult());
 
-            game.resetAndShuffle();
+            game.resetAndShuffle(new BasicShuffle());
         }
     }
 
