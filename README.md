@@ -40,4 +40,4 @@ com.local.boxes.GameSimulationDemo
 
 ### Upcoming Tasks
 
-* **De-couple the shuffle algorithm from the game object**, shuffle has to be injected and shall follow some strategy design pattern (similar to algorithm context implemented here), so we can use any shuffle algorithm we needed
+* **De-couple the shuffle algorithm from the game object**, shuffle has to be injected and shall follow some strategy design pattern (similar to algorithm context implementation here), so we can use any shuffle algorithm we needed
