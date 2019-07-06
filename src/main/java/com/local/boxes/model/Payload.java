@@ -5,11 +5,16 @@ public class Payload {
     private final Integer reward;
     private final SIGNS sign;
 
-    public Integer getReward() {
+    private Payload(PayloadBuilder pb) {
+        this.reward = pb.reward;
+        this.sign = pb.sign;
+    }
+
+    Integer getReward() {
         return reward;
     }
 
-    public SIGNS getSign() {
+    SIGNS getSign() {
         return sign;
     }
 
@@ -31,30 +36,25 @@ public class Payload {
         return result;
     }
 
-    private Payload(PayloadBuilder pb) {
-        this.reward = pb.reward;
-        this.sign = pb.sign;
-    }
-
-    public static class PayloadBuilder {
-        private final Integer reward;
-        private final SIGNS sign;
-
-        public PayloadBuilder(Integer reward, SIGNS sign) {
-            this.reward = reward;
-            this.sign = sign;
-        }
-
-        public Payload build() {
-            return new Payload(this);
-        }
-    }
-
     @Override
     public String toString() {
         return "Payload{" +
                 "reward=" + reward +
                 ", sign=" + sign +
                 '}';
+    }
+
+    static class PayloadBuilder {
+        private final Integer reward;
+        private final SIGNS sign;
+
+        PayloadBuilder(Integer reward, SIGNS sign) {
+            this.reward = reward;
+            this.sign = sign;
+        }
+
+        Payload build() {
+            return new Payload(this);
+        }
     }
 }

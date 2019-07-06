@@ -18,8 +18,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.local.boxes.model.SIGNS.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameTest {
 
@@ -44,8 +44,8 @@ class GameTest {
         secondChanceAward = demoBuildHelper.getSecondChanceAward();
         secondChanceNewLife = demoBuildHelper.getSecondChanceNewLife();
 
-        shuffled = fillInMockedShuffledDeck(bonuses, signs);
-        secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
+        shuffled = new Utils().fillInMockedShuffledDeck(bonuses, signs);
+        secondChanceShuffled = new Utils().fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
 
         game = new GameFactory().getGameInstance(
                 bonuses, signs, secondChanceAward,
@@ -58,18 +58,6 @@ class GameTest {
                 .boxed().collect(Collectors.toSet());
     }
 
-    private Stack<Box> fillInMockedShuffledDeck(Map<Integer, Integer> bonuses, List<SIGNS> signs) {
-        Stack<Box> shuffled = new Stack<>();
-        for (Integer bonus : bonuses.keySet()) {
-            for (int i = 0; i < bonuses.get(bonus); i++) {
-                shuffled.add(new Box().createBox(bonus, GO_GO_GO));
-            }
-        }
-        for (SIGNS sign : signs) {
-            shuffled.add(new Box().createBox(0, sign));
-        }
-        return shuffled;
-    }
 
     @Test
     void playRoundUseCasesTest() throws NoSuchFieldException {
@@ -83,9 +71,9 @@ class GameTest {
 
         game.resetAndShuffle(new BasicShuffle());
 
-        secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
+        secondChanceShuffled = new Utils().fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
         FieldSetter.setField(game, game.getClass().getDeclaredField("secondChanceShuffled"), secondChanceShuffled);
-        shuffled = fillInMockedShuffledDeck(bonuses, signs);
+        shuffled = new Utils().fillInMockedShuffledDeck(bonuses, signs);
         FieldSetter.setField(game, game.getClass().getDeclaredField("shuffled"), shuffled);
         game.playRound(true);
 
@@ -120,7 +108,7 @@ class GameTest {
         boxGameContext1.superBoxGameRun();
         assertEquals(0, boxGameContext1.getResult());
         Collections.reverse(shuffled);
-        secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
+        secondChanceShuffled = new Utils().fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
         Collections.reverse(secondChanceShuffled);
         BoxGameContext boxGameContext2 = new BoxGameContext(new RewardFinder(), shuffled, secondChanceShuffled);
         boxGameContext2.superBoxGameRun();

@@ -1,8 +1,8 @@
 package com.local.boxes.factory;
 
 import com.local.boxes.Game;
-import com.local.boxes.model.SIGNS;
 import com.local.boxes.model.Box;
+import com.local.boxes.model.SIGNS;
 import com.local.boxes.shuffle.Shuffleable;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class GameFactory {
         fillInSigns(signs, true);
         fillInAwards(secondChanceAward, false);
         fillInSigns(secondChanceSigns, false);
-        return gameBuilder.build(shuffleOnStart,shuffleable);
+        return gameBuilder.build(shuffleOnStart, shuffleable);
     }
 
     private void fillInSigns(List<SIGNS> signs, boolean isFirstChance) {

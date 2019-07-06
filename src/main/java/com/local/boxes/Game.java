@@ -5,7 +5,6 @@ import com.local.boxes.model.SIGNS;
 import com.local.boxes.shuffle.Shuffleable;
 import lombok.extern.log4j.Log4j;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,19 +16,27 @@ import static com.local.boxes.model.SIGNS.GO_GO_GO;
 @Log4j
 public class Game {
     private final List<Box> boxes;
-    private Stack<Box> shuffled;
     private final List<Box> secondChance;
+    private Stack<Box> shuffled;
     private Stack<Box> secondChanceShuffled;
     private int result = 0;
     private boolean isFinished = true;
 
-    public Stack<Box> getShuffled() {
+    private Game(GameBuilder gameBuilder) {
+        this.boxes = gameBuilder.boxes;
+        this.shuffled = gameBuilder.shuffled;
+        this.secondChance = gameBuilder.secondChance;
+        this.secondChanceShuffled = gameBuilder.secondChanceShuffled;
+
+    }
+
+    Stack<Box> getShuffled() {
         Stack<Box> shuffledCopy = new Stack<>();
         shuffledCopy.addAll(shuffled);
         return shuffledCopy;
     }
 
-    public Stack<Box> getSecondChanceShuffled() {
+    Stack<Box> getSecondChanceShuffled() {
         Stack<Box> secondChanceShuffledCopy = new Stack<>();
         secondChanceShuffledCopy.addAll(secondChanceShuffled);
         return secondChanceShuffledCopy;
@@ -53,18 +60,18 @@ public class Game {
         }
     }
 
-    public int getResult() {
+    int getResult() {
         return result;
     }
 
-    public void playRound(boolean disableShuffleOnTheSecondTry) {
+    void playRound(boolean disableShuffleOnTheSecondTry) {
         isFinished = false;
         log.warn("starting the game, second shuffle is disabled: " + disableShuffleOnTheSecondTry);
         int gameOver = 0;
         for (int i = 0; i < getAvailableBoxes(); i++) {
             Box boxFromShuffledDeck = getBoxFromShuffledDeck(true);
             i--;
-             if (boxFromShuffledDeck.getSign() == GO_GO_GO) {
+            if (boxFromShuffledDeck.getSign() == GO_GO_GO) {
                 result += boxFromShuffledDeck.getReward();
             } else if (boxFromShuffledDeck.getSign() == GAME_OVER) {
                 gameOver++;
@@ -75,7 +82,6 @@ public class Game {
                     log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
                     return;
                 }
-
             } else {
                 gameOver--;
             }
@@ -84,7 +90,7 @@ public class Game {
         isFinished = true;
     }
 
-    public void resetAndShuffle(Shuffleable shuffleable) {
+    void resetAndShuffle(Shuffleable shuffleable) {
         if (isFinished) {
             shuffled = new Stack<>();
             shuffled.addAll(boxes);
@@ -115,12 +121,16 @@ public class Game {
         log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
     }
 
-    private Game(GameBuilder gameBuilder) {
-        this.boxes = gameBuilder.boxes;
-        this.shuffled = gameBuilder.shuffled;
-        this.secondChance = gameBuilder.secondChance;
-        this.secondChanceShuffled = gameBuilder.secondChanceShuffled;
-
+    @Override
+    public String toString() {
+        return "Game{" +
+                "boxes=" + boxes +
+                ", shuffled=" + shuffled +
+                ", secondChance=" + secondChance +
+                ", secondChanceShuffled=" + secondChanceShuffled +
+                ", result=" + result +
+                ", isFinished=" + isFinished +
+                '}';
     }
 
     public static class GameBuilder {
@@ -148,17 +158,5 @@ public class Game {
             }
             return new Game(this);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Game{" +
-                "boxes=" + boxes +
-                ", shuffled=" + shuffled +
-                ", secondChance=" + secondChance +
-                ", secondChanceShuffled=" + secondChanceShuffled +
-                ", result=" + result +
-                ", isFinished=" + isFinished +
-                '}';
     }
 }

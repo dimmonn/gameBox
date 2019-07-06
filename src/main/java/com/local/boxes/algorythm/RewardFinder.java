@@ -3,9 +3,12 @@ package com.local.boxes.algorythm;
 import com.local.boxes.model.Box;
 import lombok.extern.log4j.Log4j;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
-import static com.local.boxes.model.SIGNS.*;
+import static com.local.boxes.model.SIGNS.EXTRA_LIFE;
+import static com.local.boxes.model.SIGNS.GAME_OVER;
 
 @Log4j
 public class RewardFinder implements BoxGameRunnable {
@@ -15,7 +18,6 @@ public class RewardFinder implements BoxGameRunnable {
     @Override
     public void playGame(Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
         log.info("SHOW TIME...");
-        int secondRoundSize = secondChanceShuffled.size();
         List<Box> boxes = new ArrayList<>(shuffled);
         Box extraLifeBox = new Box().createBox(0, EXTRA_LIFE);
         Box gameOverBox = new Box().createBox(0, GAME_OVER);

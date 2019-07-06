@@ -4,7 +4,7 @@ import com.local.boxes.model.Box;
 
 import java.util.List;
 
-public interface Shuffleable{
+public interface Shuffleable {
     void shuffle(List<? extends Box> toShuffle);
 
 }

@@ -3,7 +3,7 @@ package com.local.boxes;
 import com.local.boxes.factory.GameFactory;
 import com.local.boxes.shuffle.BasicShuffle;
 
-public class GameSimulationDemo {
+class GameSimulationDemo {
     public static void main(String[] args) {
         Utils demoBuildHelper = new Utils();
         demoBuildHelper.basicSetup();

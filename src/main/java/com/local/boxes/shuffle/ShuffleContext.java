@@ -11,7 +11,8 @@ class ShuffleContext {
     public ShuffleContext(Shuffleable collectionShuffleable) {
         this.collectionShuffleable = collectionShuffleable;
     }
-    public void shuffle(List<? extends Box> toShuffle){
+
+    public void shuffle(List<? extends Box> toShuffle) {
         collectionShuffleable.shuffle(toShuffle);
     }
 }

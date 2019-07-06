@@ -9,6 +9,7 @@ import static com.local.boxes.model.SIGNS.GO_GO_GO;
 
 class Utils {
 
+
     private List<SIGNS> secondChanceNewLife;
     private Stack<Box> shuffled;
     private Stack<Box> secondChanceShuffled;
@@ -17,7 +18,7 @@ class Utils {
     private Map<Integer, Integer> secondChanceAward;
 
     void basicSetup() {
-       bonuses = new HashMap<Integer, Integer>() {{
+        bonuses = new HashMap<Integer, Integer>() {{
             put(100, 1);
             put(20, 2);
             put(5, 5);
@@ -41,33 +42,34 @@ class Utils {
         secondChanceShuffled = fillInMockedShuffledDeck(secondChanceAward, secondChanceNewLife);
 
     }
-    public Stack<Box> getShuffled() {
+
+    Stack<Box> getShuffled() {
         Collections.shuffle(shuffled);
         return shuffled;
     }
 
-    public Stack<Box> getSecondChanceShuffled() {
+    Stack<Box> getSecondChanceShuffled() {
         Collections.shuffle(secondChanceShuffled);
         return secondChanceShuffled;
     }
 
-    public List<SIGNS> getSecondChanceNewLife() {
+    List<SIGNS> getSecondChanceNewLife() {
         return new ArrayList<>(secondChanceNewLife);
     }
 
-    public Map<Integer, Integer> getBonuses() {
+    Map<Integer, Integer> getBonuses() {
         return new HashMap<>(bonuses);
     }
 
-    public List<SIGNS> getSigns() {
+    List<SIGNS> getSigns() {
         return new ArrayList<>(signs);
     }
 
-    public Map<Integer, Integer> getSecondChanceAward() {
+    Map<Integer, Integer> getSecondChanceAward() {
         return new HashMap<>(secondChanceAward);
     }
 
-    private Stack<Box> fillInMockedShuffledDeck(Map<Integer, Integer> bonuses, List<SIGNS> signs) {
+    Stack<Box> fillInMockedShuffledDeck(Map<Integer, Integer> bonuses, List<SIGNS> signs) {
         Stack<Box> shuffled = new Stack<>();
         for (Integer bonus : bonuses.keySet()) {
             for (int i = 0; i < bonuses.get(bonus); i++) {
