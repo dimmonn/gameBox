@@ -15,13 +15,15 @@ import static com.local.boxes.model.SIGNS.GAME_OVER;
 public class RewardFinder implements BoxGameRunnable {
     private int result;
     private boolean firstRoundState = true;
+    private List<Box> boxes;
+    private Box extraLifeBox;
+    private Box gameOverBox;
+    private Box secondChanceBox;
 
     @Override
     public void playGame(Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
         log.info("SHOW TIME...");
-        List<Box> boxes = new ArrayList<>(shuffled);
-        Box extraLifeBox = new Box().createBox(0, EXTRA_LIFE);
-        Box gameOverBox = new Box().createBox(0, GAME_OVER);
+        init(shuffled, secondChanceShuffled);
         if (boxes.indexOf(extraLifeBox) > boxes.indexOf(gameOverBox)) {
             countSumOfAwards(shuffled.stream());
         } else {
@@ -31,8 +33,12 @@ public class RewardFinder implements BoxGameRunnable {
         if (!firstRoundState) {
             return;
         }
-        Box secondChanceBox = secondChanceShuffled.pop();
-        firstRoundState = false;
+
+        runSecondRound(shuffled, secondChanceShuffled);
+        log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
+    }
+
+    private void runSecondRound(Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
         if (secondChanceBox.getSign() == EXTRA_LIFE) {
             playGame(shuffled, secondChanceShuffled);
         } else {
@@ -40,7 +46,14 @@ public class RewardFinder implements BoxGameRunnable {
             result += reward;
             log.warn("round result is " + reward);
         }
-        log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
+    }
+
+    private void init(Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
+        boxes = new ArrayList<>(shuffled);
+        extraLifeBox = new Box().createBox(0, EXTRA_LIFE);
+        gameOverBox = new Box().createBox(0, GAME_OVER);
+        secondChanceBox = secondChanceShuffled.pop();
+        firstRoundState = false;
     }
 
     private void countSumOfAwards(Stream<Box> stream) {
