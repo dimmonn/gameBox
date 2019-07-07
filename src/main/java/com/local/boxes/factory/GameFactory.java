@@ -20,14 +20,14 @@ public class GameFactory {
             Shuffleable shuffleable,
             boolean shuffleOnStart
     ) {
-        fillInAwards(bonuses, true);
-        fillInSigns(signs, true);
-        fillInAwards(secondChanceAward, false);
-        fillInSigns(secondChanceSigns, false);
+        fillInGameWithAwards(bonuses, true);
+        fillInGameWithSigns(signs, true);
+        fillInGameWithAwards(secondChanceAward, false);
+        fillInGameWithSigns(secondChanceSigns, false);
         return gameBuilder.build(shuffleOnStart, shuffleable);
     }
 
-    private void fillInSigns(List<SIGNS> signs, boolean isFirstChance) {
+    private void fillInGameWithSigns(List<SIGNS> signs, boolean isFirstChance) {
         for (SIGNS sign : signs) {
             if (isFirstChance) {
                 gameBuilder.addBox(new Box().createBox(0, sign));
@@ -37,7 +37,7 @@ public class GameFactory {
         }
     }
 
-    private void fillInAwards(Map<Integer, Integer> bonuses, boolean isFirstChance) {
+    private void fillInGameWithAwards(Map<Integer, Integer> bonuses, boolean isFirstChance) {
         for (Integer bonus : bonuses.keySet()) {
             for (int i = 0; i < bonuses.get(bonus); i++) {
                 if (isFirstChance) {

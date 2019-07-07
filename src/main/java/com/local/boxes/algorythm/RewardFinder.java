@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Stream;
 
 import static com.local.boxes.model.SIGNS.EXTRA_LIFE;
 import static com.local.boxes.model.SIGNS.GAME_OVER;
@@ -22,28 +23,30 @@ public class RewardFinder implements BoxGameRunnable {
         Box extraLifeBox = new Box().createBox(0, EXTRA_LIFE);
         Box gameOverBox = new Box().createBox(0, GAME_OVER);
         if (boxes.indexOf(extraLifeBox) > boxes.indexOf(gameOverBox)) {
-            int sum = shuffled.stream().mapToInt(Box::getReward).sum();
-            result += sum;
-            log.warn("round result is " + sum);
+            countSumOfAwards(shuffled.stream());
         } else {
             List<Box> firstRound = boxes.subList(boxes.indexOf(gameOverBox), boxes.size());
-            int sum = firstRound.stream().mapToInt(Box::getReward).sum();
-            result += sum;
-            log.warn("round result is " + sum);
+            countSumOfAwards(firstRound.stream());
         }
         if (!firstRoundState) {
             return;
         }
-        Box pop = secondChanceShuffled.pop();
+        Box secondChanceBox = secondChanceShuffled.pop();
         firstRoundState = false;
-        if (pop.getSign() == EXTRA_LIFE) {
+        if (secondChanceBox.getSign() == EXTRA_LIFE) {
             playGame(shuffled, secondChanceShuffled);
         } else {
-            int reward = pop.getReward();
+            int reward = secondChanceBox.getReward();
             result += reward;
             log.warn("round result is " + reward);
         }
         log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
+    }
+
+    private void countSumOfAwards(Stream<Box> stream) {
+        int sum = stream.mapToInt(Box::getReward).sum();
+        result += sum;
+        log.warn("round result is " + sum);
     }
 
     @Override
