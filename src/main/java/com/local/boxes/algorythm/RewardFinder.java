@@ -33,12 +33,12 @@ public class RewardFinder implements BoxGameRunnable {
         if (!firstRoundState) {
             return;
         }
-
         runSecondRound(shuffled, secondChanceShuffled);
         log.warn("FINISHED THE GAME WITH RESULT OF: " + result);
     }
 
     private void runSecondRound(Stack<Box> shuffled, Stack<Box> secondChanceShuffled) {
+        firstRoundState = false;
         if (secondChanceBox.getSign() == EXTRA_LIFE) {
             playGame(shuffled, secondChanceShuffled);
         } else {
@@ -53,7 +53,6 @@ public class RewardFinder implements BoxGameRunnable {
         extraLifeBox = new Box().createBox(0, EXTRA_LIFE);
         gameOverBox = new Box().createBox(0, GAME_OVER);
         secondChanceBox = secondChanceShuffled.pop();
-        firstRoundState = false;
     }
 
     private void countSumOfAwards(Stream<Box> stream) {
